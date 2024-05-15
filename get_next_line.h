@@ -6,7 +6,7 @@
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 16:57:53 by famendes          #+#    #+#             */
-/*   Updated: 2024/05/13 18:27:53 by famendes         ###   ########.fr       */
+/*   Updated: 2024/05/15 20:33:59 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,16 @@
 # include <fcntl.h>
 # include <stdlib.h>
 
-// node to have the string to be written
-typedef struct s_list
-{
-	char			*str;
-	struct s_list	*next;
-} t_list;
-
 //fuctions to get next line
 char	*get_next_line(int fd);
-void	create_list(t_list **lst, int fd);
-char *get_line(t_list *lst);
-void	polish_list(t_list **lst);
+char	*create_string(char *str, int fd);
+char	*copy_to_line(char *str_read);
+char	*missing_char(char *str);
 
 //utilities
-int	new_line(t_list *lst);
-void lst_add_buf(t_list *lst, char *str);
-t_list *lst_find_last(t_list **lst);
-int ft_len(t_list *lst);
-void	free_all(t_list **lst);
+int	my_strchr(char *str, int c);
+char	*str_join(char *buf, char *str_read);
+int	str_len(char *str);
+
 
 #endif

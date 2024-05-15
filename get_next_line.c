@@ -5,104 +5,102 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/09 16:57:50 by famendes          #+#    #+#             */
-/*   Updated: 2024/05/13 18:30:02 by famendes         ###   ########.fr       */
+/*   Created: 2024/05/15 18:01:07 by famendes          #+#    #+#             */
+/*   Updated: 2024/05/15 20:49:26 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	polish_list(t_list **lst)
+char	*missing_char(char *str)
 {
 	int	i;
-	int j;
-	t_list *node;
-	t_list *last_node;
+	int	j;
+	char	*new;
 
-	j = 0;
 	i = 0;
-	last_node = lst_find_last(lst);
-	node = malloc(sizeof(t_list));
-	if (!node)
-		return;
-	while (last_node->str[i] && last_node->str[i] != '\n')
+	while(str[i] && str[i] != '\n')
 		i++;
+	new = malloc(str_len(str) - i + 1);
+	if (!new)
+		return (NULL);
 	i++;
-	while (last_node->str[i])
-		node->str[j++] = last_node->str[i++];
-	node->str[j] = '\0';
-	node->next = NULL;
-	free_all(&lst);
-	*lst = node;
+	j = 0;
+	while (str[i])
+		new[j++] = str[i++];
+	new[i] = '\0';
+ 	free(str);
+	return(new);
 }
 
-char *get_line(t_list *lst)
+char	*copy_to_line(char *str_read)
 {
-	char *str;
 	int	i;
-	int j;
+	int	j;
+	char *str;
 
-	str = malloc(ft_len(lst) + 1); // allocation for string
+	i = 0;
+	j = 0;
+	str = malloc(str_len(str_read) + 1);
 	if (!str)
 		return (NULL);
-	while (lst) //coyping from lst to the string
+	while (str_read[i])
 	{
-		j = 0;
-		while (lst->str[i])
+		if(str_read[i] == '\n')
 		{
-			i = 0;
-			if (lst->str[i] == '\n') //stop cpy at \n sign
-			{
-				str[j++] = '\n';
-				str[j] = '\0';
-				return (str);
-			}	
-			str[j++] = lst->str[i++];
+			str[j++] = '\n';
+			str[j] = '\0';
+			return(str);
 		}
-		lst = lst->next;
+		str[j++] = str_read[i++];
 	}
-	str[j] = '\0';
 	return (str);
 }
 
-void	create_list(t_list **lst, int fd)
+char	*create_string(char *str, int fd)
 {
-	int	char_read;
 	char	*buf;
-	//verification if an \n exists
-	while (!new_line(*lst))
+	int	char_read;
+	
+	buf = malloc(BUFFER_SIZE + 1);
+	if (!buf)
+		return (NULL);
+	while (!my_strchr(str, '\n'))
 	{
-		buf = malloc(BUFFER_SIZE + 1);
-		if (!buf)
-			return;
-		//read buffer_size bytes of text into buf
 		char_read = read(fd, buf, BUFFER_SIZE);
 		if (!char_read)
-		{	
+		{
 			free(buf);
-			return;
-		}	
+			return(NULL);
+		}
 		buf[char_read] = '\0';
-		//add the part read into the lst
-		lst_add_buf(&lst, buf);
-		free(buf);
+		str = str_join(str, buf);
 	}
+	free(buf);
+	return (str);
 }
 
 char	*get_next_line(int fd)
 {
-	static	t_list *lst = NULL;
-	char	*next_line;
-	// verifications
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &next_line, 0) < 0) 
+	static char	*str_read;
+	char *next_line;
+	
+	if (fd < 0 || BUFFER_SIZE <= 0) 
 		return (NULL);
-	//creating list until i have encounter a \n
-	create_list(&lst, fd);
-	if (!lst)
+	str_read = create_string(str_read, fd);
+	if (!str_read)
 		return (NULL);
-	//copying from lst to buf
-	next_line = get_line(lst);
-	//freeing the lst for the next cycle
-	polish_list(&lst);
+	next_line = copy_to_line(str_read);
+	str_read = missing_char(str_read);
 	return (next_line);
+}
+int main() {
+    int fd;
+    char *line;
+
+    fd = open("test.txt", O_RDONLY);
+    if((line = get_next_line(fd)) != NULL) {
+        printf("%s", line);
+    }
+	free(line);
 }
