@@ -6,13 +6,11 @@
 /*   By: fabio <fabio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:19:22 by famendes          #+#    #+#             */
-/*   Updated: 2024/05/16 23:20:02 by fabio            ###   ########.fr       */
+/*   Updated: 2024/05/17 00:16:30 by fabio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-
 
 char	*my_strchr(char *s, int c)
 {
