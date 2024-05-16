@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fabio <fabio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:19:22 by famendes          #+#    #+#             */
-/*   Updated: 2024/05/15 20:26:13 by famendes         ###   ########.fr       */
+/*   Updated: 2024/05/16 23:20:02 by fabio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,26 @@
 
 
 
-int my_strchr(char *str, int c)
+char	*my_strchr(char *s, int c)
 {
-	int	i;
+	char	c1;
+	int		i;
+	int		end;
 
+	c1 = (char) c;
 	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
+	end = str_len(s);
+	
+	if(!s)
+		return 0;
+	
+	while (s[i])
 	{
-		if (str[i] == (char)c)
-			return (1);
+		if (s[i] == c1)
+			return ((char *)s + i);
 		i++;
 	}
-	return (0);
+	return (NULL);
 }
 
 char	*str_join(char *buf, char *str_read)
@@ -35,20 +41,21 @@ char	*str_join(char *buf, char *str_read)
 	int	i;
 	int j;
 	char *cpy;
-	
+
 	i = 0;
 	j = 0;
+	printf("len buf %i\n",str_len(buf));
 	if (!str_read)
 	{
-		str_read = malloc(1);
-		str_read[0] = '\0';
+		cpy = malloc(str_len(buf) + 1);
+	} else{
+		cpy = malloc(BUFFER_SIZE + str_len(str_read) + 1);
 	}
-	if (!str_read || !buf)
-		return (NULL);
-	cpy = malloc(str_len(buf) + str_len(str_read) + 1);
+	
 	if (!cpy)
 		return (NULL);
-	while (str_read[j])
+		
+	while (str_read && str_read[j])
 		cpy[i++] = str_read[j++];
 	j = 0;
 	while (buf[j])
@@ -62,6 +69,8 @@ int	str_len(char *str)
 {
 	int	i;
 
+	if(!str)
+		return(0);
 	i = 0;
 	while (str[i])
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fabio <fabio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:01:07 by famendes          #+#    #+#             */
-/*   Updated: 2024/05/15 20:49:26 by famendes         ###   ########.fr       */
+/*   Updated: 2024/05/17 00:02:53 by fabio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*missing_char(char *str)
 	j = 0;
 	while (str[i])
 		new[j++] = str[i++];
-	new[i] = '\0';
+	new[j] = '\0';
  	free(str);
 	return(new);
 }
@@ -59,30 +59,32 @@ char	*copy_to_line(char *str_read)
 
 char	*create_string(char *str, int fd)
 {
-	char	*buf;
+	char	buf[BUFFER_SIZE];
 	int	char_read;
 	
-	buf = malloc(BUFFER_SIZE + 1);
-	if (!buf)
-		return (NULL);
-	while (!my_strchr(str, '\n'))
-	{
+	char_read = 1;
+	while (char_read > 0 && !my_strchr(str, '\n'))
+	{	
+		printf("fd before read %i", fd);
 		char_read = read(fd, buf, BUFFER_SIZE);
+		printf("fd after read %i", fd);
+		printf("char read %i\n", char_read);
 		if (!char_read)
 		{
-			free(buf);
 			return(NULL);
 		}
 		buf[char_read] = '\0';
-		str = str_join(str, buf);
+		str = str_join(buf, str);
+		printf("str %s\n", str);
+		char *a = my_strchr(str, '\n');
+		printf("my_strchar result %s\n",a);
 	}
-	free(buf);
 	return (str);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*str_read;
+	static char	*str_read = NULL;
 	char *next_line;
 	
 	if (fd < 0 || BUFFER_SIZE <= 0) 
@@ -99,8 +101,9 @@ int main() {
     char *line;
 
     fd = open("test.txt", O_RDONLY);
-    if((line = get_next_line(fd)) != NULL) {
+    while((line = get_next_line(fd)) != NULL) {
         printf("%s", line);
+		free(line);
     }
-	free(line);
+
 }
