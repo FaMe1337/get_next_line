@@ -6,7 +6,7 @@
 /*   By: fabio <fabio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:01:07 by famendes          #+#    #+#             */
-/*   Updated: 2024/05/17 00:02:53 by fabio            ###   ########.fr       */
+/*   Updated: 2024/05/17 01:31:23 by fabio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ char	*missing_char(char *str)
 	while(str[i] && str[i] != '\n')
 		i++;
 	new = malloc(str_len(str) - i + 1);
+	printf("size of malloc in missing char: %d\n",str_len(str) - i + 1);
 	if (!new)
 		return (NULL);
-	i++;
+	if (*str != '\n')
+		i++;
 	j = 0;
 	while (str[i])
 		new[j++] = str[i++];
@@ -38,6 +40,7 @@ char	*copy_to_line(char *str_read)
 	int	i;
 	int	j;
 	char *str;
+	printf("copy str_read: %s\n",str_read);
 
 	i = 0;
 	j = 0;
@@ -54,6 +57,7 @@ char	*copy_to_line(char *str_read)
 		}
 		str[j++] = str_read[i++];
 	}
+	str[j] = '\0';
 	return (str);
 }
 
@@ -63,21 +67,16 @@ char	*create_string(char *str, int fd)
 	int	char_read;
 	
 	char_read = 1;
+	printf("str before cycle: %s\n",str);
 	while (char_read > 0 && !my_strchr(str, '\n'))
 	{	
-		printf("fd before read %i", fd);
 		char_read = read(fd, buf, BUFFER_SIZE);
-		printf("fd after read %i", fd);
-		printf("char read %i\n", char_read);
-		if (!char_read)
-		{
+		printf("buf after read: %s\n", buf);
+		if (char_read <= 1)
 			return(NULL);
-		}
 		buf[char_read] = '\0';
 		str = str_join(buf, str);
-		printf("str %s\n", str);
-		char *a = my_strchr(str, '\n');
-		printf("my_strchar result %s\n",a);
+		//tenho de ver condiçao de paragem char_read=2 ultima leitura
 	}
 	return (str);
 }
@@ -90,6 +89,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0) 
 		return (NULL);
 	str_read = create_string(str_read, fd);
+	printf("str_read: %s\n",str_read);
 	if (!str_read)
 		return (NULL);
 	next_line = copy_to_line(str_read);
@@ -102,8 +102,7 @@ int main() {
 
     fd = open("test.txt", O_RDONLY);
     while((line = get_next_line(fd)) != NULL) {
-        printf("%s", line);
+        printf("main print: %s\n", line);
 		free(line);
     }
-
 }
