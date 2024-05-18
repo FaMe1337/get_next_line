@@ -6,7 +6,7 @@
 /*   By: fabio <fabio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 16:57:53 by famendes          #+#    #+#             */
-/*   Updated: 2024/05/16 22:26:15 by fabio            ###   ########.fr       */
+/*   Updated: 2024/05/17 22:45:04 by fabio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ char	*copy_to_line(char *str_read);
 char	*missing_char(char *str);
 
 //utilities
-char	*my_strchr(char *s, int c);
-char	*str_join(char *buf, char *str_read);
+int	my_strchr(char *s, int c);
+char*str_join(char *buf, char *str_read);
 int	str_len(char *str);
 
 

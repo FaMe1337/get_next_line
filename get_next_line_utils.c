@@ -6,36 +6,30 @@
 /*   By: fabio <fabio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:19:22 by famendes          #+#    #+#             */
-/*   Updated: 2024/05/17 01:28:44 by fabio            ###   ########.fr       */
+/*   Updated: 2024/05/17 22:45:00 by fabio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*my_strchr(char *s, int c)
+int	my_strchr(char *s, int c)
 {
-	char	c1;
 	int		i;
-	int		end;
 
-	c1 = (char) c;
 	i = 0;
-	end = str_len(s);
-	
 	if(!s)
 		return 0;
-	
 	while (s[i])
 	{
-		if (s[i] == c1)
-			return ((char *)s + i);
+		if (s[i] == (char)c)
+			return (1);
 		i++;
 	}
-	return (NULL);
+	return (0);
 }
 
 char	*str_join(char *buf, char *str_read)
-{	printf("buf na join : %s str_read na join %s\n", buf, str_read);
+{
 	int	i;
 	int j;
 	char *cpy;
@@ -58,9 +52,7 @@ char	*str_join(char *buf, char *str_read)
 	j = 0;
 	while (buf[j])
 		cpy[i++] = buf[j++];
-	printf("buf na join2 : %s str_read na join2 %s\n", buf, str_read);
 	cpy[i] = '\0';
-	printf("cpy :%s\n", cpy);
 	free(str_read);
 	return (cpy);
 }
