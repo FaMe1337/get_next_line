@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fabio <fabio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 18:01:07 by famendes          #+#    #+#             */
-/*   Updated: 2024/05/18 20:20:01 by fabio            ###   ########.fr       */
+/*   Created: 2024/05/18 20:05:40 by fabio             #+#    #+#             */
+/*   Updated: 2024/05/18 20:25:09 by fabio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*missing_char(char *str)
 {
@@ -83,25 +83,15 @@ char	*create_string(char *str, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char	*str_read = NULL;
+	static char	*str_read[4096];
 	char *next_line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 4095)
 		return (NULL);
-	str_read = create_string(str_read, fd);
-	if (!str_read)
+	str_read[fd] = create_string(str_read[fd], fd);
+	if (!str_read[fd])
 		return (NULL);
-	next_line = copy_to_line(str_read);
-	str_read = missing_char(str_read);
+	next_line = copy_to_line(str_read[fd]);
+	str_read[fd] = missing_char(str_read[fd]);
 	return (next_line);
 }
-/* int main() {
-    int fd;
-    char *line;
-
-    fd = open("text.txt", O_RDONLY);
-    while ((line = get_next_line(fd)) != NULL) {
-        printf("main print: %s\n", line);
-		free(line);
-    }
-} */
