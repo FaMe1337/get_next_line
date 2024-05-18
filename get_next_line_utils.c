@@ -6,7 +6,7 @@
 /*   By: fabio <fabio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:19:22 by famendes          #+#    #+#             */
-/*   Updated: 2024/05/17 22:45:00 by fabio            ###   ########.fr       */
+/*   Updated: 2024/05/18 18:51:06 by fabio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	my_strchr(char *s, int c)
 
 	i = 0;
 	if(!s)
-		return 0;
+		return (0);
 	while (s[i])
 	{
 		if (s[i] == (char)c)
@@ -39,15 +39,15 @@ char	*str_join(char *buf, char *str_read)
 	
 	if (!str_read)
 	{
-		cpy = malloc(str_len(buf) + 1);
-	} else{
-		cpy = malloc(str_len(buf) + str_len(str_read) + 1);
+		str_read = malloc(1);
+		str_read[0] = '\0'; 
 	}
-	
+	if (!str_read || !buf)
+		return (NULL);
+	cpy = malloc(str_len(str_read) + str_len(buf) + 1);
 	if (!cpy)
 		return (NULL);
-		
-	while (str_read && str_read[j])
+	while (str_read[j])
 		cpy[i++] = str_read[j++];
 	j = 0;
 	while (buf[j])

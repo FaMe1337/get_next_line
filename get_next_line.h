@@ -6,21 +6,21 @@
 /*   By: fabio <fabio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 16:57:53 by famendes          #+#    #+#             */
-/*   Updated: 2024/05/17 22:45:04 by fabio            ###   ########.fr       */
+/*   Updated: 2024/05/18 18:51:17 by fabio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 10
-#endif
-
 # include <unistd.h>
 # include <stdio.h>
 # include <fcntl.h>
 # include <stdlib.h>
+
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 10
+#endif
 
 //fuctions to get next line
 char	*get_next_line(int fd);
@@ -30,7 +30,7 @@ char	*missing_char(char *str);
 
 //utilities
 int	my_strchr(char *s, int c);
-char*str_join(char *buf, char *str_read);
+char	*str_join(char *buf, char *str_read);
 int	str_len(char *str);
 
 
