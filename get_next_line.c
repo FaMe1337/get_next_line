@@ -6,7 +6,7 @@
 /*   By: fabio <fabio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:01:07 by famendes          #+#    #+#             */
-/*   Updated: 2024/05/21 19:27:51 by fabio            ###   ########.fr       */
+/*   Updated: 2024/05/21 23:14:09 by fabio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*create_string(char *str, int fd)
 	int	char_read;
 	
 	char_read = 1;
-	while (!my_strchr(str, '\n') && char_read > 0)
+	while (!my_strchr(str, '\n'))
 	{	
 		char_read = read(fd, buf, BUFFER_SIZE);
 		if (char_read == -1)
@@ -84,20 +84,19 @@ char	*create_string(char *str, int fd)
 char	*get_next_line(int fd)
 {
 	static char	*str_read;
-	char *next_line;
-	int	char_read;
+	char *line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	str_read = create_string(str_read, fd);
 	if (!str_read)
 		return (NULL);
-	next_line = copy_to_line(str_read);
+	line = copy_to_line(str_read);
 	str_read = missing_char(str_read);
-	return (next_line);
+	return (line);
 }
 
-int main() {
+/* int main() {
     int fd;
     char *line;
 
@@ -106,4 +105,4 @@ int main() {
         printf("main print: %s\n", line);
 		free(line);
     }
-}
+} */
