@@ -12,33 +12,6 @@
 
 #include "get_next_line.h"
 
-/* void	ft_strcpy(char *dst, const char *src)
-{
-	while (*src)	
-		*dst++ = *src++;
-	*dst = '\0';
-}
-
-char	*ft_strdup(const char *str)
-{
-	char *str_dup;
-	int i;
-	
-	if (!str)
-		return (NULL);
-	str_dup = malloc(str_len(str) + 1);
-	if (!str_dup)
-		return (NULL);
-	while (str[i])
-	{
-		str_dup[i] = str[i];
-		i++;
-	}
-	str_dup[i] = '\0';
-	return (str_dup);
-	
-}
-
 char	*my_strchr(char *s, int c)
 {
 	int		i;
@@ -63,7 +36,11 @@ char	*str_join(char *buf, char *str_read)
 
 	i = 0;
 	j = 0;
-	
+	if (!str_read)
+	{
+		str_read = malloc(1);
+		str_read[0] = '\0';
+	}
 	if (!str_read || !buf)
 		return (NULL);
 	cpy = malloc(str_len(str_read) + str_len(buf) + 1);
@@ -79,7 +56,7 @@ char	*str_join(char *buf, char *str_read)
 	return (cpy);
 }
 
-int	str_len(char *str)
+int	str_len(const char *str)
 {
 	int	i;
 
@@ -89,5 +66,5 @@ int	str_len(char *str)
 	while (str[i])
 		i++;
 	return (i);
-} */
+}
  

@@ -6,7 +6,7 @@
 /*   By: fabio <fabio@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 16:57:53 by famendes          #+#    #+#             */
-/*   Updated: 2024/05/21 12:51:48 by fabio            ###   ########.fr       */
+/*   Updated: 2024/05/21 19:25:24 by fabio            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,8 @@ char	*copy_to_line(char *str_read);
 char	*missing_char(char *str);
 
 //utilities
-void	ft_strcpy(char *dst, const char *src);
-char	*ft_strdup(const char *src);
 char	*my_strchr(char *s, int c);
 char	*str_join(char *buf, char *str_read);
 int	str_len(const char *str);
-
 
 #endif
