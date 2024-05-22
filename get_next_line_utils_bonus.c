@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 18:19:22 by famendes          #+#    #+#             */
-/*   Updated: 2024/05/22 14:45:03 by famendes         ###   ########.fr       */
+/*   Created: 2024/05/20 14:34:35 by famendes          #+#    #+#             */
+/*   Updated: 2024/05/20 19:14:47 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	my_strchr(char *s, int c)
 {

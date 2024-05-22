@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: famendes <famendes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 18:01:07 by famendes          #+#    #+#             */
-/*   Updated: 2024/05/22 14:50:09 by famendes         ###   ########.fr       */
+/*   Created: 2024/05/20 14:34:31 by famendes          #+#    #+#             */
+/*   Updated: 2024/05/22 14:43:33 by famendes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*missing_char(char *str)
 {
@@ -83,26 +83,15 @@ char	*create_string(char *str, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char	*str_read;
+	static char	*str_read[4096];
 	char		*next_line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 4095)
 		return (NULL);
-	str_read = create_string(str_read, fd);
-	if (!str_read)
+	str_read[fd] = create_string(str_read[fd], fd);
+	if (!str_read[fd])
 		return (NULL);
-	next_line = copy_to_line(str_read);
-	str_read = missing_char(str_read);
+	next_line = copy_to_line(str_read[fd]);
+	str_read[fd] = missing_char(str_read[fd]);
 	return (next_line);
 }
-/* int main() {
-    int fd;
-    char *line;
-
-    fd = open("text.txt", O_RDONLY);
-    while ((line = get_next_line(fd)) != NULL) {
-        printf("%s", line);
-		free(line);
-    }
-
-} */
